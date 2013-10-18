@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment=Continous horizontall image scroll
+Name=slyde
+
+[X-HTMLExport Author]
+Name=Ilya Sukhanov
+Url=http://sukhanov.net
+
+[X-HTMLExport Preview]
+Name=Details screenshot
+Url=preview.png
+
+[X-HTMLExport Options]
+Allow non-square thumbnails=true
+
+[X-HTMLExport Parameter galleryName]
+Name=Galery Name
+Type=String
+Default=Gallery
