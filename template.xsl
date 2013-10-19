@@ -70,6 +70,10 @@
 
 <xsl:template name="style">
 	<exsl:document href="slyde.css" method='text'>
+		<xsl:for-each select="collections/collection/image/full">	
+			<xsl:sort select="@height" data-type="number" order="descending"/>
+			<xsl:if test="position() = 1">
+				<xsl:variable name='maxHeight' select='@height'/>
 body { background: #0; }
 .container { margin: 0 auto; }
 
@@ -79,8 +83,8 @@ body { background: #0; }
 }
 
 .frame {
-	height: 800px;
-	line-height: 800px;
+	height: <xsl:value-of select="$maxHeight"/>px;
+	line-height: <xsl:value-of select="$maxHeight"/>px;
 	overflow: hidden;
 }
 .frame ul {
@@ -103,7 +107,7 @@ body { background: #0; }
 }
 .frame ul li div img {
 	width: auto;
-	height: 800px;
+	height: <xsl:value-of select="$maxHeight"/>px;
 }
 .frame ul li div:hover .hide{
 	display:block;
@@ -111,25 +115,25 @@ body { background: #0; }
 .frame ul li div .hide{
 	display:none;
 }
-.frame ul li div h2{                                                                           
-    position: absolute;                                                                        
-    top: 10%;                                                                                  
-    left:10%;                                                                                  
-    padding: 10px;                                                                             
-    color: white;                                                                              
-    font: bold 24px Sans-Serif;                                                                
-    background: rgb(0, 0, 0);                                                                  
-    background: rgba(0, 0, 0, 0.7);                                                            
-}                                                                                              
-.frame ul li div p{                                                                            
-    position: absolute;                                                                        
-    bottom: 10%;                                                                               
-    padding: 10px;                                                                             
-    color: white;                                                                              
-    font: bold 18px Sans-Serif;                                                                
-    background: rgb(0, 0, 0);                                                                  
-    background: rgba(0, 0, 0, 0.7);                                                            
-}  
+.frame ul li div h2{
+    position: absolute;
+    top: 10%;
+    left:10%;
+    padding: 10px;
+    color: white;
+    font: bold 24px Sans-Serif;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+}
+.frame ul li div p{
+    position: absolute;
+    bottom: 10%;
+    padding: 10px;
+    color: white;
+    font: bold 18px Sans-Serif;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+}
 
 /* Scrollbar */
 .scrollbar {
@@ -155,6 +159,8 @@ body { background: #0; }
 .controls {
 	margin: 25px 0; text-align: center;
 }
+			</xsl:if>
+		</xsl:for-each>
 	</exsl:document>
 </xsl:template>
 
