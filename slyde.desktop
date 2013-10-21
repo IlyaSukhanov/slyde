@@ -17,3 +17,13 @@ Allow non-square thumbnails=true
 Name=Galery Name
 Type=String
 Default=Gallery
+
+[X-HTMLExport Parameter maxHeight]
+Name=Gallery image max height
+Type=int
+Default=800
+
+[X-HTMLExport Parameter maxWidth]
+Name=Gallery image max width
+Type=int
+Default=1280

@@ -16,6 +16,7 @@
 			<xsl:for-each select="collections/collection">	
 				<xsl:variable name="folder" select="fileName"/>
 				<xsl:for-each select="image">
+					<xsl:sort select="date" order="descending"/>
 					{
 						"filename":"<xsl:value-of select="$folder"/>/<xsl:value-of select="full/@fileName"/>",
 						"title":"<xsl:value-of select="title"/>",
@@ -70,10 +71,6 @@
 
 <xsl:template name="style">
 	<exsl:document href="slyde.css" method='text'>
-		<xsl:for-each select="collections/collection/image/full">	
-			<xsl:sort select="@height" data-type="number" order="descending"/>
-			<xsl:if test="position() = 1">
-				<xsl:variable name='maxHeight' select='@height'/>
 body { background: #0; }
 .container { margin: 0 auto; }
 
@@ -94,7 +91,7 @@ body { background: #0; }
 }
 .frame ul li {
 	float: left;
-	width: 1280;
+	width: <xsl:value-of select="$maxWidth"/>px;
 	margin: 0 1px 0 0;
 	padding: 0;
 	background: #0;
@@ -107,7 +104,19 @@ body { background: #0; }
 }
 .frame ul li div img {
 	width: auto;
-	height: <xsl:value-of select="$maxHeight"/>px;
+	height: auto;
+	max-width: <xsl:value-of select="$maxWidth"/>px;
+	max-height:  <xsl:value-of select="$maxHeight"/>px;
+	opacity:0.3;
+	transition: opacity .5s ease-in-out;
+	-moz-transition: opacity .5s ease-in-out;
+	-webkit-transition: opacity .5s ease-in-out;
+}
+.frame ul li.active div img {
+	opacity:1;
+	transition: opacity .5s ease-in-out;
+	-moz-transition: opacity .5s ease-in-out;
+	-webkit-transition: opacity .5s ease-in-out;
 }
 .frame ul li div:hover .hide{
 	display:block;
@@ -159,8 +168,6 @@ body { background: #0; }
 .controls {
 	margin: 25px 0; text-align: center;
 }
-			</xsl:if>
-		</xsl:for-each>
 	</exsl:document>
 </xsl:template>
 
