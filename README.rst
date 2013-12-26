@@ -1,20 +1,21 @@
 Slyde
 =====
 
-Slyde is a horizontally scrolling image gallery. As images are advanced
-new ones are auto-loaded, making for a very intuitive and easy to user
-interface. `See slyde in action.`_
-
-Slyde is intended to be used as `Kipi`_ HTML export theme. In the future it
-will be packaged in a way that it can also be conveniently used to make
-galleries without requiring the use of a Kipi compatible application.
+Slyde is a horizontally scrolling lazy load image gallery theme for Kipi_
+enabled applications such as digikam_. Check out a `slyde demo.`_ Slyde uses
+the sly_ library, which provides many methods for navigating the
+gallery; scrolling, buttons, and drag and drop.
 
 .. _Kipi: https://en.wikipedia.org/wiki/KDE_Image_Plugin_Interface
-.. _See slyde in action.: http://dotcommie.net/photo
+.. _digikam: http://www.digikam.org/
+.. _sly: https://github.com/darsain/sly
+.. _slyde demo.: http://dotcommie.net/photo
 
 
 Installation
 ------------
+
+Installing slyde, is a matter of copying into your user theme directory:
 
 1. mkdir -p ~/.kde/share/apps/kipiplugin_htmlexport/themes
 2. cd ~/.kde/share/apps/kipiplugin_htmlexport/themes
@@ -33,23 +34,14 @@ To use slyde:
 
 .. _digikam: http://www.digikam.org/
 
-Troubleshooting
----------------
+Tips
+----
 
-No images show in chrome/chromium when opened locally (file://....)
-````````````````````````````````````````````````````````````````````
-Most browsers have a security feature where the JavaScript is restricted
-to only loading files from the current domain. You would assume that if
-a files a web page is opened on local file system, the contained JavaScript
-would be allowed to also open files on the local files systems (permissions
-permitting). And this is in fact the case for most browsers; except for chromium.
-By default chromium does not allow js to load files from local filesystem
-regardless of where the js is coming from.
+Slyde requires two configuration parameters, maximum width and height of images.
+During scaling proportions will be maintaned, but bound by this size. For aesthetics
+reasons, the ratio should be kept similar to the most common one of the gallery.
 
-More about this can be found on in the `chromium bug report`_. There are work arounds:
-
-1. Start chromium with --allow-file-access-from-files flag.
-2. Don't access files over file:// and serve them with a HTTP server instead. The easiest way to do this is use pythons built in HTTP server. Simply run 'python -m SimpleHTTPServer' from the gallery directory and then access the gallery with http://localhost:8000
-
-.. _chromium bug report: https://code.google.com/p/chromium/issues/detail?id=40787  
+After setting slyde settings kipi will prompt with image export settings, Here
+"Max Size" should be checked and set to the largest of the image width and heigh
+parameters set for slyde.
 

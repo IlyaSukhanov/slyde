@@ -10,29 +10,9 @@
 >
 <xsl:output/>
 
-<xsl:template name="jsonList">
-	<exsl:document href="list.json" method='text'>
-	{"images":[
-			<xsl:for-each select="collections/collection">	
-				<xsl:variable name="folder" select="fileName"/>
-				<xsl:for-each select="image">
-					<xsl:sort select="date" order="descending"/>
-					{
-						"filename":"<xsl:value-of select="$folder"/>/<xsl:value-of select="full/@fileName"/>",
-						"title":"<xsl:value-of select="title"/>",
-						"description":"<xsl:value-of select="translate(description,'&#xA;',' ')"/>",
-						"width":"<xsl:value-of select="full/@width"/>",
-						"height":"<xsl:value-of select="full/@height"/>",
-						"date":"<xsl:value-of select="date"/>"
-					}
-					<xsl:if test="not(position() = last())">,</xsl:if>
-				</xsl:for-each>
-			</xsl:for-each>
-		]}
-	</exsl:document>
-</xsl:template>
 
 <xsl:template name="index">
+	<!--<xsl:param name="galleryName" select="foo"/>-->
 	<html>
 		<head>
 			<title><xsl:value-of select="$galleryName"/></title>
@@ -56,6 +36,25 @@
 
 					<div class="frame" id="frame">
 						<ul id="items" class="items clearfix">
+							<xsl:for-each select="collections/collection">	
+								<xsl:variable name="folder" select="fileName"/>
+								<xsl:for-each select="image">
+									<xsl:sort select="date" order="descending"/>
+									<xsl:variable name="filename" select="full/@fileName"/>
+									<xsl:variable name="width" select="full/@width"/>
+									<xsl:variable name="height" select="full/@height"/>
+									<xsl:variable name="id" select="full/@fileName"/>
+										<li>
+										<div class='image'>
+										<h2 class='hide'><a href='#{$id}'><xsl:value-of select="title"/></a></h2>
+										<img id='{$id}' class="slyde" data-src="{$folder}/{$filename}"/>
+										<noscript><img src="{$folder}/{$filename}"/></noscript>
+										<p class='hide'><xsl:value-of select="translate(description,'&#xA;',' ')"/></p>
+										</div>
+										</li>
+									<xsl:if test="not(position() = last())"></xsl:if>
+								</xsl:for-each>
+							</xsl:for-each>
 						</ul>
 					</div>
 
@@ -70,6 +69,8 @@
 </xsl:template>
 
 <xsl:template name="style">
+	<!--<xsl:param name="maxHeight" select="800"/>
+	<xsl:param name="maxWidth" select="800"/>-->
 	<exsl:document href="slyde.css" method='text'>
 body { background: #0; }
 .container { margin: 0 auto; }
@@ -100,9 +101,13 @@ body { background: #0; }
 	cursor: pointer;
 }
 .frame ul li div {
+	/* This height migh seem redundant, but because its possible for
+	the div to appear empty it can get collapsed causing havoc with
+	sly. Specifying height here ensures it does not get collapsed */
+	height: <xsl:value-of select="$maxHeight"/>px;
 	position: relative;
 }
-.frame ul li div img {
+.frame ul li div img.slyde {
 	width: auto;
 	height: auto;
 	max-width: <xsl:value-of select="$maxWidth"/>px;
@@ -112,7 +117,7 @@ body { background: #0; }
 	-moz-transition: opacity .5s ease-in-out;
 	-webkit-transition: opacity .5s ease-in-out;
 }
-.frame ul li.active div img {
+.frame ul li.active div img.slyde {
 	opacity:1;
 	transition: opacity .5s ease-in-out;
 	-moz-transition: opacity .5s ease-in-out;
@@ -172,7 +177,6 @@ body { background: #0; }
 </xsl:template>
 
 <xsl:template match="/">
-	<xsl:call-template name="jsonList"/>
 	<xsl:call-template name="style"/>
 	<xsl:call-template name="index"/>
 </xsl:template>

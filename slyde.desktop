@@ -1,5 +1,5 @@
 [Desktop Entry]
-Comment=Continous horizontall image scroll
+Comment=Continous horizontall image scrolling gallery.
 Name=slyde
 
 [X-HTMLExport Author]
@@ -19,11 +19,13 @@ Type=String
 Default=Gallery
 
 [X-HTMLExport Parameter maxHeight]
-Name=Gallery image max height
-Type=int
+Name=Image max height
+#Using string instead of int because Default > 99 doesn't work
+Type=String
 Default=800
 
 [X-HTMLExport Parameter maxWidth]
-Name=Gallery image max width
-Type=int
+Name=Image max width
+#Using string instead of int because Default > 99 doesn't work
+Type=String
 Default=1280

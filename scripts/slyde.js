@@ -1,5 +1,21 @@
 jQuery(function($){
     'use strict';
+
+	// How many images should we pre load on each side
+	var loadThreshold = 3;
+
+	// Find what image we should start at
+	var startAt = 0; 
+	var images = document.querySelectorAll(".slyde");
+	if (window.location.hash){
+		for (var i = 0; i < images.length; i++){
+			if ( window.location.hash.substring(1) ==  images[i].getAttribute("id")){
+				startAt=i;
+				break;
+			}
+		}
+	}
+
     var options = {
         horizontal: 1,
         itemNav: 'forceCentered',
@@ -8,7 +24,7 @@ jQuery(function($){
         mouseDragging: 1,
         touchDragging: 1,
         releaseSwing: 1,
-        startAt: 0,
+        startAt: startAt,
         scrollBar: '#scrollbar',
         scrollBy: 1,
         speed: 100,
@@ -20,58 +36,37 @@ jQuery(function($){
         prev: '#prev',
         next: '#next'
     };
-    var frame = new Sly('#frame', options);
-    var $items = $('#items');
-    var imageList={};
-    $.ajax({
-        'async': false,
-        'global': false,
-        'url': 'list.json',
-        'dataType': "json",
-        'success': function (data) {
-            imageList=data;
-        }
-    });
 
-    function populate(count) {
-        console.log("loading:" + count)
-        var output = '';
-        var fileName = '';
-        var description = '';
-        var title = '';
-        var offset = $items.children().length;
-        for (var i = 0; i < count && (offset +i+1) <= imageList.images.length; i++) {
-            fileName = imageList.images[offset + i].filename;
-            title =  imageList.images[offset + i].title;
-            description = imageList.images[offset + i].description;
-            output +=   '<li>' +
-                            '<div class=\'image\'>' +
-                                '<img src=\'' + fileName +'\'/>' +
-                                '<h2 class=\'hide\'>' + title + '</h2>'+
-                                '<p class=\'hide\'>' + description  +'</p>'+
-                            '</div>' +
-                        '</li>';
-        }
-        return $items.append(output);
-    }
+    var frame = new Sly('#frame', options);
+
+	function loadImages(frame){
+		var first = Math.max(frame.rel.firstItem - loadThreshold, 0);
+		var last = Math.min(frame.rel.lastItem + loadThreshold, frame.items.length);
+		if ( last < frame.rel.activeItem ){
+			first = Math.max(frame.rel.activeItem - loadThreshold, 0);
+			last = Math.min(frame.rel.activeItem + loadThreshold, frame.items.length)
+		}
+		var image = document.querySelectorAll(".slyde");
+
+		for(var i = first; i < last; i++){
+			if (image[i].getAttribute("src") == null){
+				image[i].setAttribute('src', image[i].getAttribute("data-src"));
+			}
+		}
+	}
 
     // Load next set of images when we get close to the end
     frame.on('change', function () {
-        if( this.rel.lastItem >= ($items.children().length - 3) && ($items.children().length < imageList.images.length)){
-            populate(3)
-            this.reload();
-        }
+		loadImages(frame);
     });
-
-    // Populate items
-    populate(3);
-
-    // Initiate Sly
-    frame.init();
 
     // Reload on resize
     $(window).on('resize', function () {
         frame.reload();
+    });
+    $(window).on('load', function () {
+        frame.init();
+        //frame.reload();
     });
 });
 
