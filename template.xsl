@@ -75,6 +75,15 @@
 body { background: #0; }
 .container { margin: 0 auto; }
 
+a:link{
+	color:lightblue;
+}
+a:hover{
+	color:cornflowerblue;
+}
+a:visited{
+	color:burlywood;
+}
 .wrap {
 	position: relative;
 	margin: 3em 0;
@@ -95,8 +104,6 @@ body { background: #0; }
 	width: <xsl:value-of select="$maxWidth"/>px;
 	margin: 0 1px 0 0;
 	padding: 0;
-	background: #0;
-	color: #0;
 	text-align: center;
 	cursor: pointer;
 }
