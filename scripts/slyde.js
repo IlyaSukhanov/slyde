@@ -41,11 +41,10 @@ jQuery(function($){
 
 	function loadImages(frame){
 		var first = Math.max(frame.rel.firstItem - loadThreshold, 0);
-		var last = Math.min(frame.rel.lastItem + loadThreshold, frame.items.length);
-		if ( last < frame.rel.activeItem ){
-			first = Math.max(frame.rel.activeItem - loadThreshold, 0);
-			last = Math.min(frame.rel.activeItem + loadThreshold, frame.items.length)
-		}
+		var last = Math.min(
+			Math.max(frame.rel.lastItem, frame.rel.activeItem) + loadThreshold,
+			frame.items.length
+		);
 		var image = document.querySelectorAll(".slyde");
 
 		for(var i = first; i < last; i++){
