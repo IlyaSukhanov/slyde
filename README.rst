@@ -45,3 +45,10 @@ After setting slyde settings kipi will prompt with image export settings, Here
 "Max Size" should be checked and set to the largest of the image width and heigh
 parameters set for slyde.
 
+License
+-------
+
+This project is licensed under the `MIT License`_.
+
+.. _MIT License: http://opensource.org/licenses/MIT
+
