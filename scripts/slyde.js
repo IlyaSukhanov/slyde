@@ -25,6 +25,8 @@ jQuery(function($){
         touchDragging: 1,
         releaseSwing: 1,
         startAt: startAt,
+        scrollSource: frame,
+        scrollTrap: true,
         scrollBar: '#scrollbar',
         scrollBy: 1,
         speed: 100,

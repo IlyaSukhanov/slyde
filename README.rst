@@ -9,7 +9,7 @@ gallery; scrolling, buttons, and drag and drop.
 .. _Kipi: https://en.wikipedia.org/wiki/KDE_Image_Plugin_Interface
 .. _digikam: http://www.digikam.org/
 .. _sly: https://github.com/darsain/sly
-.. _slyde demo.: http://dotcommie.net/photo
+.. _slyde demo.: http://dotcommie.net/gallery
 
 
 Installation

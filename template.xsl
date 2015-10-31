@@ -28,6 +28,12 @@
 			<div class="container">
 				<div class="wrap">
 					<h1><xsl:value-of select="$galleryName"/></h1>
+
+					<div class="controls">
+						<button id="prev"><i class="icon-chevron-left"></i><xsl:value-of select="$i18nPrevious"/></button>
+						<button id="next"><xsl:value-of select="$i18nNext"/><i class="icon-chevron-right"></i></button>
+					</div>
+
 					<div id='scrollbar' class="scrollbar">
 						<div class="handle">
 							<div class="mousearea"></div>
@@ -57,11 +63,6 @@
 							</xsl:for-each>
 						</ul>
 					</div>
-
-					<div class="controls center">
-						<button id="prev"><i class="icon-chevron-left"></i><xsl:value-of select="$i18nPrevious"/></button>
-						<button id="next"><xsl:value-of select="$i18nNext"/><i class="icon-chevron-right"></i></button>
-					</div>
 				</div>
 			</div>
 		</body>
@@ -72,9 +73,16 @@
 	<!--<xsl:param name="maxHeight" select="800"/>
 	<xsl:param name="maxWidth" select="800"/>-->
 	<exsl:document href="slyde.css" method='text'>
-body { background: #0; }
-.container { margin: 0 auto; }
+body {
+    background: #0;
+}
 
+h1{
+    font-size: 6vh;
+    margin-top: 2vh;
+    margin-left: 2vh;
+    margin-bottom: 1vh;
+}
 a:link{
 	color:lightblue;
 }
@@ -84,15 +92,18 @@ a:hover{
 a:visited{
 	color:burlywood;
 }
-.wrap {
-	position: relative;
-	margin: 3em 0;
+
+.container {
+    margin: 0 auto;
 }
 
+.wrap {
+	position: relative;
+	margin: 0;
+}
 .frame {
-	height: <xsl:value-of select="$maxHeight"/>px;
-	line-height: <xsl:value-of select="$maxHeight"/>px;
 	overflow: hidden;
+    height: 80vh;
 }
 .frame ul {
 	list-style: none;
@@ -101,8 +112,8 @@ a:visited{
 }
 .frame ul li {
 	float: left;
-	width: <xsl:value-of select="$maxWidth"/>px;
-	margin: 0 1px 0 0;
+    height: 80vh;
+	margin: 0;
 	padding: 0;
 	text-align: center;
 	cursor: pointer;
@@ -111,14 +122,14 @@ a:visited{
 	/* This height migh seem redundant, but because its possible for
 	the div to appear empty it can get collapsed causing havoc with
 	sly. Specifying height here ensures it does not get collapsed */
-	height: <xsl:value-of select="$maxHeight"/>px;
+	width: 65vw;
 	position: relative;
+    height: 80vh;
+    vertical-align: middle;
 }
 .frame ul li div img.slyde {
-	width: auto;
-	height: auto;
-	max-width: <xsl:value-of select="$maxWidth"/>px;
-	max-height:  <xsl:value-of select="$maxHeight"/>px;
+	max-width: 60vw;
+	max-height: 80vh;
 	opacity:0.3;
 	transition: opacity .5s ease-in-out;
 	-moz-transition: opacity .5s ease-in-out;
@@ -138,30 +149,36 @@ a:visited{
 }
 .frame ul li div h2{
     position: absolute;
-    top: 10%;
-    left:10%;
+    top: 4vh;
+    border-radius: 1vh;
+    /*
+    left: 10vw;
+    */
     padding: 10px;
     color: white;
-    font: bold 24px Sans-Serif;
+    font: bold 3vh Sans-Serif;
     background: rgb(0, 0, 0);
     background: rgba(0, 0, 0, 0.7);
 }
 .frame ul li div p{
     position: absolute;
-    bottom: 10%;
+    border-radius: 1vh;
+    bottom: 4vh;
     padding: 10px;
     color: white;
-    font: bold 18px Sans-Serif;
+    font: bold 2vh Sans-Serif;
     background: rgb(0, 0, 0);
     background: rgba(0, 0, 0, 0.7);
 }
 
 /* Scrollbar */
 .scrollbar {
-	margin: 0 0 1em 0;
-	height: 2px;
+    width: 100%;
+	margin: 0;
+	height: .5vh;
 	background: #ccc;
 	line-height: 0;
+    margin-bottom: 2vh;
 }
 .scrollbar .handle {
 	width: 100px;
@@ -178,7 +195,16 @@ a:visited{
 }
 /* Controls */
 .controls {
-	margin: 25px 0; text-align: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+	margin: 0;
+    text-align: center;
+    border-radius: 1vh;
+}
+
+.controls button {
+    border-radius: 1vh;
 }
 	</exsl:document>
 </xsl:template>
